@@ -30,6 +30,11 @@ def main():
     fruit_sprites.add(apple)
     fruit_sprites.add(strawberry)
 
+    # Prevent collisions on start
+    for entity in all_sprites:
+        entity.render(screen)
+
+    score = 0
     running = True
     while running:
         screen.fill((255, 255, 255))
@@ -49,14 +54,23 @@ def main():
                 elif event.key == pygame.K_DOWN:
                     player.down()
 
+        # If the player ate a fruit
         fruit = pygame.sprite.spritecollideany(player, fruit_sprites)
         if fruit:
+            score += 1
+            pygame.mixer.music.load("./audio/fruit-eat.wav")
+            pygame.mixer.music.play(1)
             fruit.reset()
             for entity in all_sprites:
                 if not isinstance(entity, Player):
-                    entity.set_speed(entity.speed + 0.25)
+                    entity.set_speed(entity.speed + 0.15)
 
+        # If the player hit a bomb
         if pygame.sprite.collide_rect(player, bomb):
+            score = 0
+            pygame.mixer.music.load("./audio/bomb-explode.wav")
+            pygame.mixer.music.play(1)
+
             for entity in all_sprites:
                 entity.set_speed((randint(0, 200) / 100) + 1)
                 entity.reset()
@@ -64,6 +78,13 @@ def main():
         for entity in all_sprites:
             entity.move()
             entity.render(screen)
+
+        # Render score
+        font = pygame.font.SysFont("Arial", 20)
+        text = font.render(f"Score {score}", True, (0, 0, 0))
+        center_text = text.get_rect(center=(screen_width / 2, 25))
+        screen.blit(text, center_text)
+
         pygame.display.flip()
         clock.tick(60)
 

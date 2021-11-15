@@ -19,3 +19,6 @@ class GameObject(pygame.sprite.Sprite):
 
     def set_speed(self, speed):
         self.speed = speed
+
+    def set_image(self, image):
+        self.surf = pygame.image.load(image)
