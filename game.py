@@ -2,7 +2,7 @@ from apple import Apple
 from bomb import Bomb
 from player import Player
 from strawberry import Strawberry
-from random import randint
+from random import randint, uniform
 from constants import *
 
 import pygame
@@ -61,9 +61,11 @@ def main():
             pygame.mixer.music.load("./audio/fruit-eat.wav")
             pygame.mixer.music.play(1)
             fruit.reset()
+
+            # Increase the speed of all non player sprites
             for entity in all_sprites:
                 if not isinstance(entity, Player):
-                    entity.set_speed(entity.speed + 0.15)
+                    entity.set_speed(entity.speed + uniform(0.1, 0.2))
 
         # If the player hit a bomb
         if pygame.sprite.collide_rect(player, bomb):

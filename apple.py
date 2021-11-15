@@ -23,6 +23,3 @@ class Apple(GameObject):
         self.x = choice(lanes)
         self.y = 436 if direction < 0 else 64
         self.dy = direction
-
-    def set_pass(self):
-        pass
