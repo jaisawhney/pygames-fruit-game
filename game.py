@@ -1,7 +1,4 @@
-from apple import Apple
-from bomb import Bomb
-from player import Player
-from strawberry import Strawberry
+from sprites import Apple, Asteroid, Player, Strawberry
 from random import randint, uniform
 from constants import *
 
@@ -17,14 +14,14 @@ def main():
     apple = Apple()
     strawberry = Strawberry()
     player = Player()
-    bomb = Bomb()
+    asteroid = Asteroid()
 
     # Sprite groups
     all_sprites = pygame.sprite.Group()
     all_sprites.add(player)
     all_sprites.add(apple)
     all_sprites.add(strawberry)
-    all_sprites.add(bomb)
+    all_sprites.add(asteroid)
 
     fruit_sprites = pygame.sprite.Group()
     fruit_sprites.add(apple)
@@ -36,9 +33,13 @@ def main():
 
     score = 0
     running = True
+
+    background_img = pygame.image.load("./images/background.png")
+
     while running:
         screen.fill((255, 255, 255))
 
+        screen.blit(background_img, (0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -68,7 +69,7 @@ def main():
                     entity.set_speed(entity.speed + uniform(0.1, 0.2))
 
         # If the player hit a bomb
-        if pygame.sprite.collide_rect(player, bomb):
+        if pygame.sprite.collide_rect(player, asteroid):
             score = 0
             pygame.mixer.music.load("./audio/bomb-explode.wav")
             pygame.mixer.music.play(1)
@@ -83,7 +84,7 @@ def main():
 
         # Render score
         font = pygame.font.SysFont("Arial", 20)
-        text = font.render(f"Score {score}", True, (0, 0, 0))
+        text = font.render(f"Score {score}", True, (255, 255, 255))
         center_text = text.get_rect(center=(screen_width / 2, 25))
         screen.blit(text, center_text)
 
