@@ -87,7 +87,7 @@ class Strawberry(GameObject):
     def reset(self):
         direction = (-1) ** randrange(2)
 
-        self.x = 436 if direction < 0 else 64
+        self.x = 436 if direction < 0 else 0
         self.y = choice(lanes)
         self.dx = direction
 
@@ -110,7 +110,7 @@ class Apple(GameObject):
         direction = (-1) ** randrange(2)
 
         self.x = choice(lanes)
-        self.y = 436 if direction < 0 else 64
+        self.y = 436 if direction < 0 else 0
         self.dy = direction
 
 
@@ -141,7 +141,7 @@ class Asteroid(GameObject):
         # Down
         elif direction == 1:
             self.x = choice(lanes)
-            self.y = 64
+            self.y = 0
             self.dy = 1
         # Left
         elif direction == 2:
@@ -150,6 +150,6 @@ class Asteroid(GameObject):
             self.dx = -1
         # Right
         elif direction == 3:
-            self.x = 64
+            self.x = 0
             self.y = choice(lanes)
             self.dx = 1
