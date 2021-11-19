@@ -33,8 +33,6 @@ class AnimatedGameObject(GameObject):
         self.current_image_index = 0
 
     def render(self, screen):
-        self.rect.x = self.x
-        self.rect.y = self.y
         self.frame_count += 1
 
         # New image every 6 frames
@@ -47,7 +45,9 @@ class AnimatedGameObject(GameObject):
 
             # Update image
             self.surf = pygame.image.load(self.images[self.current_image_index])
-        screen.blit(self.surf, (self.x, self.y))
+
+        # Call superclass render to finish rendering the sprite
+        super(AnimatedGameObject, self).render(screen)
 
 
 class Player(AnimatedGameObject):
