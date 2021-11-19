@@ -71,7 +71,7 @@ def main():
         # If the player hit a bomb
         if pygame.sprite.collide_rect(player, asteroid):
             score = 0
-            pygame.mixer.music.load("./audio/bomb-explode.wav")
+            pygame.mixer.music.load("audio/asteroid-explode.wav")
             pygame.mixer.music.play(1)
 
             for entity in all_sprites:
@@ -87,7 +87,6 @@ def main():
         text = font.render(f"Score {score}", True, (255, 255, 255))
         center_text = text.get_rect(center=(screen_width / 2, 25))
         screen.blit(text, center_text)
-
         pygame.display.flip()
         clock.tick(60)
 

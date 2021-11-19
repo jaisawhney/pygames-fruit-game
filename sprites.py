@@ -25,9 +25,41 @@ class GameObject(pygame.sprite.Sprite):
         self.surf = pygame.image.load(image)
 
 
-class Player(GameObject):
+class AnimatedGameObject(GameObject):
+    def __init__(self, x, y, images):
+        super(AnimatedGameObject, self).__init__(x, y, images[0])
+        self.images = images
+        self.frame_count = 0
+        self.current_image_index = 0
+
+    def render(self, screen):
+        self.rect.x = self.x
+        self.rect.y = self.y
+        self.frame_count += 1
+
+        # New image every 6 frames
+        if self.frame_count >= 6:
+            self.frame_count = 0
+
+            self.current_image_index += 1
+            if len(self.images) <= self.current_image_index:
+                self.current_image_index = 0
+
+            # Update image
+            self.surf = pygame.image.load(self.images[self.current_image_index])
+        screen.blit(self.surf, (self.x, self.y))
+
+
+class Player(AnimatedGameObject):
     def __init__(self):
-        super(Player, self).__init__(93, 93, "./images/player.png")
+        images = ["./images/player/pink-1.gif", "./images/player/pink-2.gif",
+                  "./images/player/pink-3.gif", "./images/player/pink-4.gif",
+                  "./images/player/pink-5.gif", "./images/player/pink-6.gif",
+                  "./images/player/pink-7.gif", "./images/player/pink-8.gif",
+                  "./images/player/pink-9.gif", "./images/player/pink-10.gif",
+                  "./images/player/pink-11.gif"]
+
+        super(Player, self).__init__(93, 93, images)
         self.dx = 93
         self.dy = 93
         self.pos_x = 1
